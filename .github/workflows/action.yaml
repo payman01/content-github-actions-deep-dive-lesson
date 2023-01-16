@@ -1,5 +1,5 @@
 name: Deploy my Lambda Function
-run-name: ${{github.actor}}
+run-name: ${{github.actor}} is at Build process
 # trigger on all push events to main branch
 on: 
   push:
