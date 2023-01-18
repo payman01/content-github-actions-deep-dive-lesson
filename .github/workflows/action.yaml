@@ -1,8 +1,7 @@
 name: Deploy my Lambda Function
-run-name: ${{github.actor}} is at Build process
+
 # trigger on all push events to main branch
 on: 
-  workflow_dispatch:
   push:
     branches:
       - main
@@ -19,11 +18,15 @@ jobs:
           python-version: 3.8
       - name: Install libraries
         run: |
-            
+            cd function
             python -m pip install --upgrade pip
             if [ -f requirements.txt ]; then pip install -r requirements.txt -t .; fi
       - name: Create zip bundle
         run: |
-            
+            cd function
             zip -r ../${{ github.sha }}.zip .
-      
+      - name: Archive artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: zipped-bundle
+          path: ${{ github.sha }}.zip
